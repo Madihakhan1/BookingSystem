@@ -1,0 +1,102 @@
+@startuml
+
+package "Entities" {
+    class Student {
+        - String email
+        - String name
+        - String phone
+        + getEmail() : String
+        + setEmail(email : String) : void
+        + getName() : String
+        + setName(name : String) : void
+        + getPhone() : String
+        + setPhone(phone : String) : void
+    }
+
+    class Item {
+        - String item_name
+        - String description
+        + getItemName() : String
+        + setItemName(itemName : String) : void
+        + getDescription() : String
+        + setDescription(description : String) : void
+    }
+
+    class Booking {
+        - LocalDate booking_date
+        - int days
+        - String comment
+        - String booking_status
+        + getBookingDate() : LocalDate
+        + setBookingDate(bookingDate : LocalDate) : void
+        + getDays() : int
+        + setDays(days : int) : void
+        + getComment() : String
+        + setComment(comment : String) : void
+        + getBookingStatus() : String
+        + setBookingStatus(bookingStatus : String) : void
+    }
+
+    class Room {
+        - String room_number
+        - String description
+        + getRoomNumber() : String
+        + setRoomNumber(roomNumber : String) : void
+        + getDescription() : String
+        + setDescription(description : String) : void
+    }
+}
+
+package "Controllers" {
+    class StudentController {
+        + getAllStudents() : List<Student>
+        + addStudent(student : Student) : void
+    }
+
+    class ItemController {
+        + getAllItems() : List<Item>
+        + getItemDetails(itemName : String) : Item
+    }
+
+    class BookingController {
+        + getAllBookings() : List<Booking>
+        + createBooking(booking : Booking) : void
+        + updateBookingStatus(bookingId : int, status : String) : void
+    }
+
+    class AdminController {
+        + getDashboard() : void
+    }
+}
+
+package "Mappers" {
+    class StudentMapper {
+        + getAllStudents() : List<Student>
+        + insertStudent(student : Student) : void
+    }
+
+    class ItemMapper {
+        + getAllItems() : List<Item>
+        + getItemDetails(itemName : String) : Item
+    }
+
+    class BookingMapper {
+        + getAllBookings() : List<Booking>
+        + insertBooking(booking : Booking) : void
+        + updateBookingStatus(bookingId : int, status : String) : void
+    }
+}
+
+' Relationships
+Student  --o  Booking
+Booking --* Item
+Item --o Room
+StudentController --> StudentMapper
+ItemController --> ItemMapper
+BookingController --> BookingMapper
+
+AdminController --> StudentMapper
+AdminController --> ItemMapper
+AdminController --> BookingMapper
+
+@enduml
