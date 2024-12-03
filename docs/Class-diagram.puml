@@ -1,25 +1,25 @@
 @startuml
 
-package "Entities" {
+package Entities {
     class Student {
         - String email
         - String name
         - String phone
-        + getEmail() : String
-        + setEmail(email : String) : void
-        + getName() : String
-        + setName(name : String) : void
-        + getPhone() : String
-        + setPhone(phone : String) : void
+        + getEmail()
+        + void setEmail(String email)
+        + String getName()
+        + void setName(String name)
+        + String getPhone()
+        + void setPhone(String phone)
     }
 
     class Item {
         - String item_name
         - String description
-        + getItemName() : String
-        + setItemName(itemName : String) : void
-        + getDescription() : String
-        + setDescription(description : String) : void
+        + String getItemName()
+        + void setItem_name(String item_name)
+        + String getDescription()
+        + void setDescription(String description)
     }
 
     class Booking {
@@ -27,63 +27,63 @@ package "Entities" {
         - int days
         - String comment
         - String booking_status
-        + getBookingDate() : LocalDate
-        + setBookingDate(bookingDate : LocalDate) : void
-        + getDays() : int
-        + setDays(days : int) : void
-        + getComment() : String
-        + setComment(comment : String) : void
-        + getBookingStatus() : String
-        + setBookingStatus(bookingStatus : String) : void
+        + LocalDate getBookingDate()
+        + void setBooking_date(LocalDate booking_date)
+        + int getDays()
+        + void setDays(int days)
+        + String getComment()
+        + void setComment(String comment)
+        + String getBookingStatus()
+        + void setBookingStatus(String bookingStatus)
     }
 
     class Room {
         - String room_number
         - String description
-        + getRoomNumber() : String
-        + setRoomNumber(roomNumber : String) : void
-        + getDescription() : String
-        + setDescription(description : String) : void
+        + String getRoomNumber()
+        + String setRoomNumber(String roomNumber)
+        + String getDescription()
+        + String setDescription(String description)
     }
 }
 
 package "Controllers" {
     class StudentController {
-        + getAllStudents() : List<Student>
-        + addStudent(student : Student) : void
+        + getAllStudents() List<Student>
+        + void addStudent(student Student)
     }
 
     class ItemController {
-        + getAllItems() : List<Item>
-        + getItemDetails(itemName : String) : Item
+        + getAllItems() List<Item>
+        + getItemDetails(String itemName)
     }
 
     class BookingController {
-        + getAllBookings() : List<Booking>
-        + createBooking(booking : Booking) : void
-        + updateBookingStatus(bookingId : int, status : String) : void
+        + getAllBookings() List<Booking>
+        + void createBooking(booking Booking)
+        + void updateBookingStatus(int bookingId,String status)
     }
 
     class AdminController {
-        + getDashboard() : void
+        + void getDashboard()
     }
 }
 
 package "Mappers" {
     class StudentMapper {
         + getAllStudents() : List<Student>
-        + insertStudent(student : Student) : void
+        + void insertStudent(student Student)
     }
 
     class ItemMapper {
         + getAllItems() : List<Item>
-        + getItemDetails(itemName : String) : Item
+        + getItemDetails(String itemName )
     }
 
     class BookingMapper {
-        + getAllBookings() : List<Booking>
-        + insertBooking(booking : Booking) : void
-        + updateBookingStatus(bookingId : int, status : String) : void
+        + getAllBookings() List<Booking>
+        + void insertBooking(Booking booking)
+        + void updateBookingStatus(int bookingId,String status)
     }
 }
 
