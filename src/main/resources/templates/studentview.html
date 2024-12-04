@@ -20,7 +20,7 @@
     </thead>
     <tbody>
     <!-- Thymeleaf syntaks til dynamisk data -->
-    <tr th:each="student : ${students}">
+    <tr th:each="student : ${student}">
       <td th:text="${student.name}">Navn</td>
       <td th:text="${student.email}">Email</td>
       <td th:text="${student.phone}">Telefon</td>
