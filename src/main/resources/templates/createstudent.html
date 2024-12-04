@@ -5,10 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Opret Studerende</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #1e73be; /* Blå baggrund */
+            color: white;
+        }
+        .container {
+            max-width: 500px;
+            margin-top: 50px;
+        }
+        .btn-custom {
+            background-color: #56aaff; /* Lys blå knap */
+            border: none;
+        }
+        .btn-custom:hover {
+            background-color: #3898ff; /* Mørkere blå ved hover */
+        }
+        .alert {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
     <h1>Opret Studerende</h1>
+
+    <!-- Hvis der er en besked, vis den i en alert -->
+    <div class="alert alert-info" style="display: {{message == null ? 'none' : 'block'}};">
+        {{message}}
+    </div>
+
     <form action="/students/create" method="post">
         <div class="form-group">
             <label for="name">Navn</label>
@@ -22,7 +48,11 @@
             <label for="phone">Telefon</label>
             <input type="text" class="form-control" id="phone" name="phone" required>
         </div>
-        <button type="submit" class="btn btn-primary">Opret Studerende</button>
+        <div class="form-group">
+            <label for="password">Kodeord</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn btn-custom">Opret Studerende</button>
     </form>
 </div>
 </body>
