@@ -13,9 +13,13 @@ public class StudentController {
 
     private StudentMapper studentMapper;
 
-    public static void addRoutes(Javalin app, ConnectionPool dbConnection)
-    {
-        app.get("/", ctx -> showAllStudents(ctx,dbConnection));
+    public static void addRoutes(Javalin app, ConnectionPool dbConnection) {
+        app.get("/", ctx -> ctx.render("index.html"));
+        app.get("/createstudent.html", ctx -> ctx.render("createstudent.html"));
+
+        app.post("/students/create", ctx -> createStudent(ctx, dbConnection));
+
+        app.get("/students", ctx -> showAllStudents(ctx, dbConnection));
 
 
     }
@@ -32,4 +36,42 @@ public class StudentController {
         }
     }
 
+    public static void createStudent(Context ctx, ConnectionPool dbConnection) {
+        String name = ctx.formParam("name");
+        String email = ctx.formParam("email");
+        String phone = ctx.formParam("phone");
+        String password = ctx.formParam("password");
+
+        // Validering af input
+        if (name == null || name.isEmpty()) {
+            ctx.attribute("message", "Venligst indtast dit navn.");
+            ctx.render("createstudent.html");
+            return;
+        }
+
+        if (email == null || !email.contains("@") || !email.contains(".")) {
+            ctx.attribute("message", "Venligst indtast en gyldig e-mail-adresse.");
+            ctx.render("createstudent.html");
+            return;
+        }
+
+        if (password == null || password.length() < 6) {
+            ctx.attribute("message", "Kodeordet skal være mindst 6 tegn langt.");
+            ctx.render("createstudent.html");
+            return;
+        }
+
+        try {
+            // Opretter studerende
+            StudentMapper.createStudent(name, email, phone, password, dbConnection);
+
+            // Sender succesbesked
+            ctx.attribute("message", "Din bruger er nu oprettet.");
+            ctx.render("createstudent.html");  // Vis succesmeddelelse på samme side
+        } catch (DatabaseException e) {
+            ctx.attribute("message", "Fejl ved oprettelse af bruger: " + e.getMessage());
+            ctx.render("createstudent.html");
+        }
+
+    }
 }
