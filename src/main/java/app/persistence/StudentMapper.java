@@ -3,6 +3,7 @@ package app.persistence;
 import app.entities.Student;
 import app.exceptions.DatabaseException;
 
+import javax.naming.Context;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,26 @@ public class StudentMapper {
 
         return students;
     }
+
+    public static void createStudent(String name, String email, String phone, String password, ConnectionPool pool) throws DatabaseException {
+        String sql = "INSERT INTO student (name, email, phone, password) VALUES (?, ?, ?, ?)";
+
+        try (Connection connection = pool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setString(1, name);
+            ps.setString(2, email);
+            ps.setString(3, phone);
+            ps.setString(4, password);
+
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl ved oprettelse af studerende: " + e.getMessage(), e);
+        }
+    }
+
+
+
 
 
 
