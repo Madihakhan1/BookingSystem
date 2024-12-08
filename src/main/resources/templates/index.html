@@ -54,16 +54,25 @@
 <div class="login-container">
   <h1>Velkommen til CPH Business Booking System!</h1>
   <h2>CPH Business</h2>
+
+  <!-- Hvis der er en fejlmeddelelse, vis den -->
+  <div th:if="${message}" class="alert alert-danger">
+    <p th:text="${message}"></p>
+  </div>
+
   <form action="/login" method="post">
+    <!-- Email input (matches ctx.formParam("email")) -->
     <div class="mb-3">
-      <label for="username" class="form-label">Login:</label>
-      <input type="text" class="form-control" id="username" name="username" placeholder="Indtast brugernavn" required>
+      <label for="email" class="form-label">Email:</label>
+      <input type="email" class="form-control" id="email" name="email" placeholder="Indtast din email" required>
     </div>
+    <!-- Password input (matches ctx.formParam("password")) -->
     <div class="mb-3">
       <label for="password" class="form-label">Kodeord:</label>
-      <input type="password" class="form-control" id="password" name="password" placeholder="Indtast kodeord" required>
+      <input type="password" class="form-control" id="password" name="password" placeholder="Indtast dit kodeord" required>
     </div>
-    <button type="submit" class="btn btn-custom btn-block">Log på</button>
+    <!-- Submit button -->
+    <button type="submit" class="btn btn-custom btn-block">Log ind</button>
   </form>
   <a href="/createstudent.html" class="btn btn-secondary btn-block">Opret bruger</a>
 </div>
