@@ -31,9 +31,10 @@
     <h1>Opret Studerende</h1>
 
     <!-- Hvis der er en besked, vis den i en alert -->
-    <div class="alert alert-info" style="display: {{message == null ? 'none' : 'block'}};">
-        {{message}}
+    <div th:if="${message != null}" th:text="${message}" class="alert alert-warning bg-gradient" role="alert">
+        Fejlbeskeder vises her
     </div>
+
 
     <form action="/students/create" method="post">
         <div class="form-group">
