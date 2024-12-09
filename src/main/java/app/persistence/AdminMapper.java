@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class AdminMapper {
 
-    public Admin login(String email, String password, ConnectionPool dbConnection) throws Exception {
+    public static Admin login(String email, String password, ConnectionPool dbConnection) throws Exception {
         // Søg i databasen efter en admin med det givne email og password
         try (Connection conn = dbConnection.getConnection()) {
             String query = "SELECT * FROM admin WHERE email = ? AND password = ?";
