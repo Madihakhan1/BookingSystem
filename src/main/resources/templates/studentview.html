@@ -15,7 +15,7 @@
     <tr>
       <th>Navn</th>
       <th>Email</th>
-      <th>Telefon</th>
+      <th>Status</th>
     </tr>
     </thead>
     <tbody>
@@ -23,7 +23,7 @@
     <tr th:each="student : ${student}">
       <td th:text="${student.name}">Navn</td>
       <td th:text="${student.email}">Email</td>
-      <td th:text="${student.phone}">Telefon</td>
+      <td th:text="${student.phone}">Status</td>
 
     </tr>
     </tbody>
