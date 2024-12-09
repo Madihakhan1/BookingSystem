@@ -13,28 +13,64 @@
             margin: 0;
             font-family: Arial, sans-serif;
         }
+
         .navbar {
             background-color: #1e73be; /* Blå farve */
             color: white;
+            padding: 0.5rem 1rem; /* Juster padding for at reducere ekstra plads */
         }
+
         .navbar-brand, .nav-link {
             color: white !important;
         }
+
+        .navbar-nav {
+            margin-left: auto; /* Juster elementerne i navbaren mod højre */
+        }
+
+        .nav-item {
+            padding-left: 1rem; /* Mellemrum mellem navbar-elementerne */
+        }
+
         .container {
             margin-top: 2rem;
         }
+
         .card {
             margin-bottom: 1rem;
         }
+
         .card-header {
             background-color: #1e73be;
             color: white;
         }
+
         .btn-custom {
             background-color: #1e73be;
             color: white;
         }
+
         .btn-custom:hover {
+            background-color: #145a92;
+        }
+
+        /* Opdater farven på Log ud-knappen */
+        .nav-item .nav-link.btn-light {
+            background-color: #1e73be; /* Samme blå farve som de andre knapper */
+            color: white; /* Hvid tekst på knappen */
+        }
+
+        .nav-item .nav-link.btn-light:hover {
+            background-color: #145a92; /* Mørkere blå ved hover */
+        }
+
+        /* Juster knapper udenfor navbaren */
+        .card-body a {
+            color: #fff; /* Sørg for at knapper i cards er hvid */
+            background-color: #1e73be;
+        }
+
+        .card-body a:hover {
             background-color: #145a92;
         }
     </style>
@@ -46,17 +82,9 @@
         <a class="navbar-brand" href="#">CPH Business Admin</a>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
+                <!-- Kun Log ud-knappen er synlig og har samme blå farve -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/studentview">Studenteroversigt</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/equipmentview">Udstyrsoversigt</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/bookingoverview">Bookingoversigt</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link btn btn-sm btn-light text-danger" href="/logout">Log ud</a>
+                    <a class="nav-link btn btn-sm btn-light text-white" href="/logout">Log ud</a>
                 </li>
             </ul>
         </div>
@@ -65,7 +93,6 @@
 
 <!-- Main Content -->
 <div class="container">
-    <!-- Dynamisk velkomstmeddelelse -->
     <h1 class="text-center my-4">
         Velkommen, <span th:text="${adminName}">Admin</span>!
     </h1>
@@ -98,6 +125,16 @@
                 <div class="card-body">
                     <p>Se og administrer alle bookinger.</p>
                     <a href="/bookingoverview" class="btn btn-custom">Gå til bookingoversigt</a>
+                </div>
+            </div>
+        </div>
+        <!-- New Card for Add Student -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">Tilføj Studerende</div>
+                <div class="card-body">
+                    <p>Tilføj en ny studerende til systemet.</p>
+                    <a href="/admin/add-student" class="btn btn-custom">Gå til Tilføj Studerende</a>
                 </div>
             </div>
         </div>
