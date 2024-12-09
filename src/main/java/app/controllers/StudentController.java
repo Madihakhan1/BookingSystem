@@ -7,6 +7,11 @@ import app.persistence.StudentMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class StudentController {
@@ -14,27 +19,32 @@ public class StudentController {
     private StudentMapper studentMapper;
 
     public static void addRoutes(Javalin app, ConnectionPool dbConnection) {
+        // Ruter til oprettelse og visning af studerende
         app.get("/", ctx -> ctx.render("index.html"));
         app.get("/createstudent.html", ctx -> ctx.render("createstudent.html"));
 
+        // Rute til at oprette studerende
         app.post("/students/create", ctx -> createStudent(ctx, dbConnection));
 
-        app.get("/students", ctx -> showAllStudents(ctx, dbConnection));
-
-
+        // Rute til at hente alle studerende og vise dem i studentview
+        app.get("/studentview", ctx -> {
+            getAllStudents(ctx, dbConnection);  // Hent studerende og vis dem i studentview
+        });
     }
 
-    public static void showAllStudents(Context ctx, ConnectionPool dbConnection) {
-        try {
-            StudentMapper studentMapper = new StudentMapper();
-            List<Student> students = studentMapper.getAllStudents(dbConnection); // Hent alle studerende
 
-            ctx.attribute("student", students);
-            ctx.render("studentview.html");
+
+    // Hent alle studerende fra databasen
+    public static void getAllStudents(Context ctx, ConnectionPool dbConnection) {
+        try {
+            List<Student> students = StudentMapper.getAllStudents(dbConnection); // Brug Mapperen til at hente studerende
+            ctx.attribute("student", students); // Sæt studerende i attributen
+            ctx.render("studentview.html"); // Render studentview.html med studerende
         } catch (DatabaseException e) {
             ctx.status(500).result("Fejl ved hentning af studerende: " + e.getMessage());
         }
     }
+
 
     public static void createStudent(Context ctx, ConnectionPool dbConnection) {
         String name = ctx.formParam("name");
