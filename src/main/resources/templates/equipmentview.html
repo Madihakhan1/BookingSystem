@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Udstyr</title>
+  <!-- Bootstrap CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Blå tema til navbar og tabel */
+    .navbar {
+      background-color: #007bff; /* Blå farve */
+    }
+
+    .navbar-brand, .nav-link {
+      color: white !important; /* Hvid tekst for navbaren */
+    }
+
+    .navbar-nav .nav-link:hover {
+      color: #ffd700 !important; /* Guldfarve ved hover */
+    }
+
+    /* Blå farve til tabel header */
+    .thead-dark {
+      background-color: #0056b3; /* Mørkeblå farve */
+    }
+
+    .table th, .table td {
+      color: #ffffff; /* Hvid tekst i tabellen */
+    }
+
+    .table-striped tbody tr:nth-child(odd) {
+      background-color: #e7f1ff; /* Lys blå farve for striber i tabellen */
+    }
+
+    .table-bordered {
+      border: 1px solid #007bff; /* Blå kant omkring tabellen */
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation bar (navbar) -->
+<nav class="navbar navbar-expand-lg navbar-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Admin</a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/admin/equipmentview"></a>
+        </li>
+        <!-- Add other navigation links if needed -->
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-5">
+  <h1 class="text-center mb-4 text-primary">Liste over alt udstyr, der kan bookes</h1>
+
+  <!-- Table to show the equipment list -->
+  <table class="table table-striped table-bordered">
+    <thead class="thead-dark">
+    <tr>
+      <th>Udstyr</th>
+      <th>Kategori</th>
+      <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Thymeleaf syntaks til dynamisk data -->
+    <tr th:each="item : ${items}">
+      <td th:text="${item.item_name}">Udstyr</td>
+      <td th:text="${item.category}">Kategori</td>
+      <td th:text="${item.status}">Status</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <!-- Hvis der er en fejlmeddelelse, vis den her -->
+  <div th:if="${message}">
+    <p th:text="${message}" style="color: red;"></p> <!-- Fejlmeddelelse vises her -->
+  </div>
+
+</div>
+
+<!-- Bootstrap JS og Popper.js (valgfrit, for ekstra funktioner som modals) -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
