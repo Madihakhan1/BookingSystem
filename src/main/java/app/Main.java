@@ -40,7 +40,8 @@ public class Main {
         // Routing
 
         StudentController.addRoutes(app, connectionPool);
-        AdminController.addRoutes(app,connectionPool);
+        AdminController.addRoutes(app, connectionPool);
+
 
     }
 
