@@ -4,6 +4,7 @@ import app.config.SessionConfig;
 import app.config.ThymeleafConfig;
 
 import app.controllers.AdminController;
+import app.controllers.ItemController;
 import app.entities.Student;
 import app.persistence.ConnectionPool;
 import app.persistence.StudentMapper;
@@ -41,6 +42,8 @@ public class Main {
 
         StudentController.addRoutes(app, connectionPool);
         AdminController.addRoutes(app, connectionPool);
+        ItemController.addRoutes(app, connectionPool);
+
 
 
     }
