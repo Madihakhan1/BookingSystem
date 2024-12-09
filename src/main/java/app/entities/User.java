@@ -6,12 +6,13 @@ public abstract class User {
     protected String phone;
     protected String password;
     protected boolean isAdmin;
+    protected String status;
 
     // Konstruktør, der tager email, name, phone og status
-    public User(String email, String name, String phone) {
+    public User(String email, String name, String status) {
         this.email = email;
         this.name = name;
-        this.phone = phone;
+        this.status = status;
         this.isAdmin = false;
     }
 
@@ -23,6 +24,8 @@ public abstract class User {
         this.password = password;
         this.isAdmin = false;
     }
+
+
 
     // Getter og Setter for email
     public String getEmail() {
