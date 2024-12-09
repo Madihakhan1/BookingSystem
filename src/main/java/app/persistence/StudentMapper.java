@@ -16,7 +16,7 @@ public class StudentMapper {
 
     public static List<Student> getAllStudents(ConnectionPool pool) throws DatabaseException {
         List<Student> students = new ArrayList<>();
-        String sql = "SELECT name, email, phone FROM student"; // Hent status også
+        String sql = "SELECT name, email, status FROM student"; // Hent status også
 
         try (Connection connection = pool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -26,9 +26,9 @@ public class StudentMapper {
             while (rs.next()) {
                 String name = rs.getString("name");
                 String email = rs.getString("email");
-                String phone = rs.getString("phone");
+                String status = rs.getString("status");
 
-                students.add(new Student(email, name, phone)); // Send status til Student
+                students.add(new Student(email, name, status)); // Send status til Student
             }
 
         } catch (SQLException e) {
