@@ -1,11 +1,15 @@
 package app.controllers;
 
 import app.entities.Admin;
+import app.entities.Student;
 import app.exceptions.DatabaseException;
 import app.persistence.AdminMapper;
 import app.persistence.ConnectionPool;
+import app.persistence.StudentMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+
+import java.util.List;
 
 
 public class AdminController {
@@ -25,6 +29,15 @@ public class AdminController {
 
         // Logout route
         app.get("/logout", ctx -> doLogout(ctx));  // Calls doLogout method
+
+        app.get("/admin/add-student", ctx -> {
+            ctx.render("add-student.html");  // Render skabelonen
+        });
+
+        // Rute for at håndtere POST-anmodningen for at tilføje studerende
+        app.post("/admin/add-student", ctx -> addStudent(ctx, dbConnection));
+        app.get("/admin/studentview", ctx -> showStudents(ctx, dbConnection));  // Denne rute
+
     }
 
     public static void doLogin(Context ctx, ConnectionPool dbConnection) {
@@ -70,4 +83,48 @@ public class AdminController {
     }
 
 
+    public static void addStudent(Context ctx, ConnectionPool dbConnection) {
+        // Hent data fra formularen
+        String name = ctx.formParam("name");
+        String email = ctx.formParam("username");
+        String password = ctx.formParam("password");
+
+        // Validering: sørg for at alle felter er udfyldt
+        if (name == null || email == null || password == null || name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            ctx.attribute("message", "Alle felter skal udfyldes.");
+            ctx.render("add_student.html");
+            return;
+        }
+
+        // Opret en studerende og gem den i databasen via mapper
+        try {
+            Student student = new Student(name, email, password); // Her medtage password
+            StudentMapper.addStudent(student, dbConnection);  // Gem studerende i databasen
+            ctx.redirect("/admin/studentview");  // Redirect til listen over studerende
+        } catch (Exception e) {
+            ctx.status(500).result("Fejl ved tilføjelse af studerende: " + e.getMessage());
+        }
+    }
+
+    public static void showStudents(Context ctx, ConnectionPool dbConnection) {
+        try {
+            // Hent alle studerende fra databasen via den eksisterende getAllStudents metode
+            List<Student> students = StudentMapper.getAllStudents(dbConnection);
+
+            // Hvis studerende findes, send dem til Thymeleaf
+            if (students != null && !students.isEmpty()) {
+                ctx.attribute("students", students);
+                ctx.render("studentview.html");  // Render studentview.html
+            } else {
+                // Hvis ingen studerende er fundet, vis en besked
+                ctx.attribute("message", "Ingen studerende fundet.");
+                ctx.render("studentview.html");
+            }
+        } catch (Exception e) {
+            ctx.status(500).result("Fejl ved hentning af studerende: " + e.getMessage());
+        }
+    }
+
 }
+
+

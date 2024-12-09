@@ -56,8 +56,19 @@ public class StudentMapper {
     }
 
 
+    // Metode til at gemme en studerende i databasen
+    public static void addStudent(Student student, ConnectionPool dbConnection) throws Exception {
+        // Korrigeret query for at inkludere name, email og password
+        String query = "INSERT INTO student (email,name, password) VALUES (?, ?, ?)";
 
-
-
-
+        try (Connection conn = dbConnection.getConnection()) {
+            try (PreparedStatement stmt = conn.prepareStatement(query)) {
+                // Indsæt de værdier, der skal gemmes
+                stmt.setString(1, student.getEmail());     // Sæt email
+                stmt.setString(2, student.getName());      // Sæt navn
+                stmt.setString(3, student.getPassword());  // Sæt password
+                stmt.executeUpdate();  // Udfør indsættelsen
+            }
+        }
+    }
 }
