@@ -4,8 +4,8 @@ package app.entities;
 public class Student extends User {
 
     // Konstruktør med status og password
-    public Student(String email, String name, String phone, String password) {
-        super(email, name, phone, password); // Brug superklassen' konstruktor
+    public Student(String email, String name, String phone, String status) {
+        super(email, name, phone, status); // Brug superklassen' konstruktor
 
     }
 
