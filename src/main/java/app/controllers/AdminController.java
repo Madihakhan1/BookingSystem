@@ -12,9 +12,7 @@ public class AdminController {
 
     private static final AdminMapper adminMapper = new AdminMapper();
 
-    // Constructor
-    public AdminController() {
-    }
+
 
     public static void addRoutes(Javalin app, ConnectionPool dbConnection) {
 
