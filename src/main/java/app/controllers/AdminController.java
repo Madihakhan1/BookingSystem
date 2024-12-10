@@ -83,24 +83,25 @@ public class AdminController {
     }
 
 
-    public static void addStudent(Context ctx, ConnectionPool dbConnection) {
+    public static void addStudent(io.javalin.http.Context ctx, ConnectionPool dbConnection) {
         // Hent data fra formularen
         String name = ctx.formParam("name");
-        String email = ctx.formParam("username");
+        String email = ctx.formParam("email");
         String password = ctx.formParam("password");
 
-        // Validering: sørg for at alle felter er udfyldt
+        // Validering: Sørg for at alle felter er udfyldt
         if (name == null || email == null || password == null || name.isEmpty() || email.isEmpty() || password.isEmpty()) {
             ctx.attribute("message", "Alle felter skal udfyldes.");
-            ctx.render("add_student.html");
+            ctx.render("add-student.html");
             return;
         }
 
         // Opret en studerende og gem den i databasen via mapper
         try {
-            Student student = new Student(name, email, password); // Her medtage password
+            Student student = new Student(name, email, password);  // Opret studerende med name, email og password
             StudentMapper.addStudent(student, dbConnection);  // Gem studerende i databasen
-            ctx.redirect("/admin/studentview");  // Redirect til listen over studerende
+            ctx.attribute("message", "Studerende er blevet tilføjet!");  // Send succesbesked
+            ctx.render("add-student.html");  // Render formularen igen med succesbesked
         } catch (Exception e) {
             ctx.status(500).result("Fejl ved tilføjelse af studerende: " + e.getMessage());
         }
