@@ -6,36 +6,39 @@ import io.javalin.Javalin;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ItemMapper {
 
 
-
     public static List<Item> getAllItems(ConnectionPool dbConnection) throws Exception {
         List<Item> items = new ArrayList<>();
+        String query = "SELECT item_name, description, category, status, item_id, location FROM item";  // Opdateret til at hente de nødvendige kolonner
 
-        try (Connection conn = dbConnection.getConnection()) {
-            String query = "SELECT item_name,description, category, status FROM item";  // Hent de relevante kolonner fra item-tabellen
-            try (PreparedStatement stmt = conn.prepareStatement(query);
-                 ResultSet rs = stmt.executeQuery()) {
+        try (Connection conn = dbConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
 
-                while (rs.next()) {
-                    // Opret et Item-objekt for hver post
-                    Item item = new Item(
-                            rs.getString("item_name"),
-                            rs.getString("description"),
-                            rs.getString("category"),
-                            rs.getString("status"));
+            while (rs.next()) {
+                String itemName = rs.getString("item_name");
+                String description = rs.getString("description");
+                String category = rs.getString("category");
+                String status = rs.getString("status");
 
-                    // Tilføj item til listen
-                    items.add(item);
-                }
+
+                // Opretter et Item-objekt med de opdaterede oplysninger og tilføjer det til listen
+                items.add(new Item(itemName, description, category, status));
             }
+
+        } catch (SQLException e) {
+            throw new Exception("Fejl ved hentning af udstyr: " + e.getMessage(), e);
         }
-        return items;  // Returner listen af items
+
+        return items;
     }
+
 
 
 

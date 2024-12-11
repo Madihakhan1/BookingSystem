@@ -1,8 +1,12 @@
 package app.controllers;
 
+import app.entities.Booking;
+import app.entities.Item;
 import app.entities.Student;
 import app.exceptions.DatabaseException;
+import app.persistence.BookingMapper;
 import app.persistence.ConnectionPool;
+import app.persistence.ItemMapper;
 import app.persistence.StudentMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
@@ -11,6 +15,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,4 +89,18 @@ public class StudentController {
         }
 
     }
+
+    // Metode til at vise booking formularen
+    public static void showBookingPage(Context ctx, ConnectionPool dbConnection) {
+        try {
+            // Hent udstyr fra databasen for at vise i dropdown
+            List<Item> items = ItemMapper.getAllItems(dbConnection);
+            ctx.attribute("items", items);  // Send udstyrsliste til Thymeleaf-siden
+            ctx.render("book_equipment.html");  // Render bookingformularen
+        } catch (Exception e) {
+            ctx.status(500).result("Fejl ved hentning af udstyr: " + e.getMessage());
+        }
+    }
+
+
 }

@@ -71,4 +71,31 @@ public class StudentMapper {
             }
         }
     }
+
+    public static Student login(String email, String password, ConnectionPool dbConnection) throws DatabaseException {
+        Student student = null;
+        String query = "SELECT email, name, status FROM student WHERE email = ? AND password = ?";
+
+        try (Connection conn = dbConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, email);
+            stmt.setString(2, password);  // Her gemmes passwordet som plain text. Det anbefales at bruge hashing i en produktionsdatabase
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                // Hvis der er en matchende studerende
+                student = new Student(
+                        rs.getString("email"),
+                        rs.getString("name"),
+                        rs.getString("status")  // Hent status på den studerende, hvis nødvendigt
+                );
+            }
+
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl ved login for studerende: " + e.getMessage(), e);
+        }
+
+        return student;  // Hvis login er succesfuldt, returner Student objektet
+    }
 }

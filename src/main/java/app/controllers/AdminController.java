@@ -15,6 +15,7 @@ import java.util.List;
 public class AdminController {
 
     private static final AdminMapper adminMapper = new AdminMapper();
+    private static final StudentMapper studentMapper = new StudentMapper();
 
 
 
@@ -45,21 +46,35 @@ public class AdminController {
         String password = ctx.formParam("password");
 
         try {
-            // Brug adminMapper til at tjekke login
-            Admin admin = adminMapper.login(email, password, dbConnection);
+            // Tjek om email ender på "@cph.com" for admin
+            if (email.endsWith("@cph.com")) {
+                // Håndter admin login
+                Admin admin = adminMapper.login(email, password, dbConnection);
 
-            if (admin != null) {
-                ctx.sessionAttribute("admin", admin);  // Gem admin objekt i sessionen
-                ctx.redirect("/adminpage");  // Redirect til admin-dashboardet
+                if (admin != null) {
+                    ctx.sessionAttribute("admin", admin);  // Gem admin objekt i sessionen
+                    ctx.redirect("/adminpage");  // Redirect til admin-dashboardet
+                } else {
+                    ctx.attribute("message", "Ugyldige loginoplysninger for admin!");
+                    ctx.render("login.html");  // Render login-siden med fejl
+                }
             } else {
-                // Hvis admin ikke findes eller login mislykkes, send fejlmeddelelse til Thymeleaf
-                ctx.attribute("message", "Ugyldige loginoplysninger!");  // Fejlmeddelelse
-                ctx.render("index.html");  // Render login-siden med fejl
+                // Håndter student login
+                Student student = studentMapper.login(email, password, dbConnection);
+
+                if (student != null) {
+                    ctx.sessionAttribute("student", student);  // Gem student objekt i sessionen
+                    ctx.redirect("/studentpage");  // Redirect til student-dashboardet
+                } else {
+                    ctx.attribute("message", "Ugyldige loginoplysninger for studerende!");
+                    ctx.render("login.html");  // Render login-siden med fejl
+                }
             }
         } catch (Exception e) {
             ctx.status(500).result("Noget gik galt: " + e.getMessage());  // Fejl ved database eller login
         }
     }
+
 
 
     // Logout metode
