@@ -24,7 +24,7 @@ public class ItemController {
 
             // Send udstyr til Thymeleaf
             ctx.attribute("items", items);  // Send data til Thymeleaf
-            ctx.render("studentpage.html");  // Render booking-siden med udstyr
+            ctx.render("equipmentview.html");  // Render booking-siden med udstyr
         } catch (Exception e) {
             ctx.status(500).result("Fejl ved hentning af udstyr: " + e.getMessage());
         }
