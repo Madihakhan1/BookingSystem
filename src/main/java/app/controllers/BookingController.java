@@ -14,10 +14,9 @@ public class BookingController {
 
     public static void addRoutes(Javalin app, ConnectionPool dbConnection) {
 
-        app.get("/studentpage", ctx -> {
-            // Du kan vælge at sende en meddelelse om succesfuld login, hvis ønsket
-            ctx.render("studentpage.html");
-        });
+
+
+
 
     }
 
