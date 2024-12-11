@@ -35,6 +35,12 @@ public class StudentController {
         app.get("/studentview", ctx -> {
             getAllStudents(ctx, dbConnection);  // Hent studerende og vis dem i studentview
         });
+
+        app.get("/studentpage", ctx -> {
+            // Du kan vælge at sende en meddelelse om succesfuld login, hvis ønsket
+            showBookingPage(ctx,dbConnection);
+        });
+
     }
 
 
@@ -96,7 +102,7 @@ public class StudentController {
             // Hent udstyr fra databasen for at vise i dropdown
             List<Item> items = ItemMapper.getAllItems(dbConnection);
             ctx.attribute("items", items);  // Send udstyrsliste til Thymeleaf-siden
-            ctx.render("book_equipment.html");  // Render bookingformularen
+            ctx.render("studentpage.html");  // Render bookingformularen
         } catch (Exception e) {
             ctx.status(500).result("Fejl ved hentning af udstyr: " + e.getMessage());
         }
