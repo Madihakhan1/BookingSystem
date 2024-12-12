@@ -21,11 +21,10 @@ class StudentMapperTest {
     private static final String URL = "jdbc:postgresql://165.232.127.225:5432/%s?currentSchema=test";
     private static final String DB = "bookingsystem";
 
-    private static ConnectionPool dbConnection; // Rettelse: Tilføjet denne variabel
+    private static ConnectionPool dbConnection;
 
     @BeforeAll
     static void setUpClass() {
-        // Initialiser ConnectionPool med korrekte parametre
         dbConnection = ConnectionPool.getInstance(USER, PASSWORD, URL, DB);
 
         try (Connection connection = dbConnection.getConnection()) {
@@ -82,10 +81,8 @@ class StudentMapperTest {
 
     @Test
     void testAddStudent() throws Exception {
-        // Opret en ny Student med alle nødvendige felter
         Student student = new Student("student5@example.com", "Eve", "12345678", "Active", "securepassword");
 
-        // Kald addStudent
         StudentMapper.addStudent(student, dbConnection);
 
         // Verificér, at den studerende er tilføjet korrekt
@@ -99,7 +96,6 @@ class StudentMapperTest {
 
     @Test
     void testLoginFailure() {
-        // Forvent, at en DatabaseException kastes, når der bruges forkerte loginoplysninger
         assertThrows(DatabaseException.class, () -> {
             StudentMapper.login("student1@example.com", "wrongpassword", dbConnection);
         });
