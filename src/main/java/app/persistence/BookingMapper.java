@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookingMapper {
+
     public static List<Booking> getBookingsByStudentEmail(String email, ConnectionPool dbConnection) throws SQLException {
         List<Booking> bookings = new ArrayList<>();
         String query = "SELECT booking_id, item_name, email, booking_date, days, comment, booking_status FROM booking WHERE email = ?";
@@ -16,20 +17,19 @@ public class BookingMapper {
         try (Connection conn = dbConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setString(1, email);  // Sætter emailen som parameter i SQL-forespørgslen
-            ResultSet rs = stmt.executeQuery();  // Udfører forespørgslen
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                // Opret et Booking objekt uden bookingId (databasen genererer det)
                 Booking booking = new Booking(
-                        rs.getString("item_name"),  // Hent item_name
-                        rs.getString("email"),  // Hent email
-                        rs.getDate("booking_date").toLocalDate(),  // Konverter booking_date til LocalDate
-                        rs.getInt("days"),  // Hent antallet af dage
-                        rs.getString("comment"),  // Hent kommentar
-                        rs.getString("booking_status")  // Hent booking status
+                        rs.getString("item_name"),
+                        rs.getString("email"),
+                        rs.getDate("booking_date").toLocalDate(),
+                        rs.getInt("days"),
+                        rs.getString("comment"),
+                        rs.getString("booking_status")
                 );
-                bookings.add(booking);  // Tilføj booking til listen
+                bookings.add(booking);
             }
 
         } catch (SQLException e) {

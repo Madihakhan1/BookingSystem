@@ -14,8 +14,7 @@ public class BookingController {
 
     public static void addRoutes(Javalin app, ConnectionPool dbConnection) {
 
-
-
+        app.post("/studentpage", ctx -> doBookEquipment(ctx,dbConnection));
 
 
     }
@@ -23,26 +22,21 @@ public class BookingController {
 
     public static void doBookEquipment(Context ctx, ConnectionPool dbConnection) {
         try {
-            // Få fat i de nødvendige oplysninger fra formularen
             String itemName = ctx.formParam("itemName");
-            String email = ctx.sessionAttribute("studentEmail"); // Hent studentens email fra sessionen
-            LocalDate bookingDate = LocalDate.parse(ctx.formParam("bookingDate")); // Opret LocalDate fra formparametrene
+            String email = ctx.sessionAttribute("studentEmail");
+            LocalDate bookingDate = LocalDate.parse(ctx.formParam("bookingDate"));
             int days = Integer.parseInt(ctx.formParam("days"));
             String comment = ctx.formParam("comment");
-            String bookingStatus = "Pending"; // Booking status er som standard "Pending"
+            String bookingStatus = "Booked";
 
-            // Opret et nyt Booking-objekt uden bookingId, da det genereres af databasen
             Booking booking = new Booking(itemName, email, bookingDate, days, comment, bookingStatus);
 
-            // Gem booking i databasen
             BookingMapper.addBooking(booking, dbConnection);
 
-            // Vis succesmeddelelse og render studentpage med besked
             ctx.attribute("message", "Booking blev gennemført succesfuldt!");
             ctx.render("studentpage.html");
 
         } catch (Exception e) {
-            // Hvis der er fejl ved booking, returner fejlmeddelelse
             ctx.status(500).result("Fejl ved booking: " + e.getMessage());
         }
     }
