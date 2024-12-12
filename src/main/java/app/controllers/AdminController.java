@@ -1,9 +1,11 @@
 package app.controllers;
 
 import app.entities.Admin;
+import app.entities.Booking;
 import app.entities.Student;
 import app.exceptions.DatabaseException;
 import app.persistence.AdminMapper;
+import app.persistence.BookingMapper;
 import app.persistence.ConnectionPool;
 import app.persistence.StudentMapper;
 import io.javalin.Javalin;
@@ -25,19 +27,18 @@ public class AdminController {
         app.get("/login", ctx -> ctx.render("login.html"));
         app.post("/login", ctx -> doLogin(ctx, dbConnection));  // Calls doLogin method
 
-        // Admin page route
         app.get("/adminpage", ctx -> adminPage(ctx));  // Calls adminPage method
 
-        // Logout route
         app.get("/logout", ctx -> doLogout(ctx));  // Calls doLogout method
 
         app.get("/admin/add-student", ctx -> {
             ctx.render("add-student.html");  // Render skabelonen
         });
 
-        // Rute for at håndtere POST-anmodningen for at tilføje studerende
         app.post("/admin/add-student", ctx -> addStudent(ctx, dbConnection));
-        app.get("/admin/studentview", ctx -> showStudents(ctx, dbConnection));  // Denne rute
+        app.get("/admin/studentview", ctx -> showStudents(ctx, dbConnection));
+
+        app.get("/bookingoverview", ctx -> showBookingOverview(ctx, dbConnection));
 
     }
 
@@ -140,6 +141,21 @@ public class AdminController {
             ctx.status(500).result("Fejl ved hentning af studerende: " + e.getMessage());
         }
     }
+
+    public static void showBookingOverview(Context ctx, ConnectionPool dbConnection) {
+        try {
+            // Hent alle bookinger fra databasen
+            List<Booking> bookings = BookingMapper.getAllBookingsWithDetails(dbConnection);
+
+            // Send bookinger til Thymeleaf-skabelonen
+            ctx.attribute("bookings", bookings);
+            ctx.render("bookingoverview.html");
+        } catch (Exception e) {
+            // Hvis der opstår fejl, vis en passende besked
+            ctx.status(500).result("Fejl ved hentning af bookingoversigt: " + e.getMessage());
+        }
+    }
+
 
 }
 

@@ -1,7 +1,6 @@
 package app.entities;
 
-import java.time.LocalDate;
-
+import java.awt.print.Book;
 import java.time.LocalDate;
 
 public class Booking {
@@ -13,8 +12,8 @@ public class Booking {
     private int days;
     private String comment;
     private String bookingStatus;
+    private String name;
 
-    // Konstruktor (uden bookingId, da det er auto-genereret)
     public Booking(String itemName, String email, LocalDate bookingDate, int days, String comment, String bookingStatus) {
         this.itemName = itemName;
         this.email = email;
@@ -22,6 +21,17 @@ public class Booking {
         this.days = days;
         this.comment = comment;
         this.bookingStatus = bookingStatus;
+
+    }
+
+    public Booking(String itemName, String email, String studentName, LocalDate bookingDate, int days, String comment, String bookingStatus) {
+        this.itemName = itemName;
+        this.email = email;
+        this.bookingDate = bookingDate;
+        this.days = days;
+        this.comment = comment;
+        this.bookingStatus = bookingStatus;
+        this.name = name;
     }
 
     // Getter-metoder
@@ -29,16 +39,24 @@ public class Booking {
         return bookingId;
     }
 
-    public String getItem_name() {
-        return itemName;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getItemName() {
+        return itemName; // Ændret fra getItem_name til getItemName
     }
 
     public String getEmail() {
         return email;
     }
 
-    public LocalDate getBooking_date() {
-        return bookingDate;
+    public LocalDate getBookingDate() {
+        return bookingDate; // Ændret fra getBooking_date til getBookingDate
     }
 
     public int getDays() {
@@ -49,8 +67,8 @@ public class Booking {
         return comment;
     }
 
-    public String getBooking_status() {
-        return bookingStatus;
+    public String getBookingStatus() {
+        return bookingStatus; // Ændret fra getBooking_status til getBookingStatus
     }
 
     // Setter-metoder
@@ -58,16 +76,16 @@ public class Booking {
         this.bookingId = bookingId;
     }
 
-    public void setItem_name(String itemName) {
-        this.itemName = itemName;
+    public void setItemName(String itemName) {
+        this.itemName = itemName; // Ændret fra setItem_name til setItemName
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public void setBooking_date(LocalDate bookingDate) {
-        this.bookingDate = bookingDate;
+    public void setBookingDate(LocalDate bookingDate) {
+        this.bookingDate = bookingDate; // Ændret fra setBooking_date til setBookingDate
     }
 
     public void setDays(int days) {
@@ -78,7 +96,7 @@ public class Booking {
         this.comment = comment;
     }
 
-    public void setBooking_status(String bookingStatus) {
-        this.bookingStatus = bookingStatus;
+    public void setBookingStatus(String bookingStatus) {
+        this.bookingStatus = bookingStatus; // Ændret fra setBooking_status til setBookingStatus
     }
 }

@@ -4,7 +4,13 @@ import app.entities.Booking;
 import app.persistence.BookingMapper;
 import app.persistence.ConnectionPool;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import io.javalin.Javalin;
 import io.javalin.http.Context;
@@ -15,7 +21,6 @@ public class BookingController {
     public static void addRoutes(Javalin app, ConnectionPool dbConnection) {
 
         app.post("/studentpage", ctx -> doBookEquipment(ctx,dbConnection));
-
 
     }
 
@@ -40,6 +45,9 @@ public class BookingController {
             ctx.status(500).result("Fejl ved booking: " + e.getMessage());
         }
     }
+
+
+
 
 
 
