@@ -58,17 +58,16 @@ public class StudentMapper {
 
     // Metode til at gemme en studerende i databasen
     public static void addStudent(Student student, ConnectionPool dbConnection) throws Exception {
-        // Korrigeret query for at inkludere name, email og password
-        String query = "INSERT INTO student (email,name, password) VALUES (?, ?, ?)";
+        String query = "INSERT INTO student (email, name, phone, status, password) VALUES (?, ?, ?, ?, ?)";
 
-        try (Connection conn = dbConnection.getConnection()) {
-            try (PreparedStatement stmt = conn.prepareStatement(query)) {
-                // Indsæt de værdier, der skal gemmes
-                stmt.setString(1, student.getEmail());     // Sæt email
-                stmt.setString(2, student.getName());      // Sæt navn
-                stmt.setString(3, student.getPassword());  // Sæt password
-                stmt.executeUpdate();  // Udfør indsættelsen
-            }
+        try (Connection conn = dbConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, student.getEmail());
+            stmt.setString(2, student.getName());
+            stmt.setString(3, student.getPhone());
+            stmt.setString(4, student.getStatus());
+            stmt.setString(5, student.getPassword()); // Sørg for at password bliver sat korrekt
+            stmt.executeUpdate();
         }
     }
 
@@ -80,22 +79,25 @@ public class StudentMapper {
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, email);
-            stmt.setString(2, password);  // Her gemmes passwordet som plain text. Det anbefales at bruge hashing i en produktionsdatabase
+            stmt.setString(2, password);
 
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                // Hvis der er en matchende studerende
                 student = new Student(
                         rs.getString("email"),
                         rs.getString("name"),
-                        rs.getString("status")  // Hent status på den studerende, hvis nødvendigt
+                        rs.getString("status") // Sørg for, at status hentes korrekt her
                 );
+            } else {
+                throw new DatabaseException("Invalid email or password.");
             }
 
         } catch (SQLException e) {
             throw new DatabaseException("Fejl ved login for studerende: " + e.getMessage(), e);
         }
 
-        return student;  // Hvis login er succesfuldt, returner Student objektet
+        return student;
     }
+
+
 }
