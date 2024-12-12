@@ -8,6 +8,10 @@ public abstract class User {
     protected boolean isAdmin;
     protected String status;
 
+    public String getStatus() {
+        return status;
+    }
+
     // Konstruktør, der tager email, name, phone og status
     public User(String email, String name, String status) {
         this.email = email;
