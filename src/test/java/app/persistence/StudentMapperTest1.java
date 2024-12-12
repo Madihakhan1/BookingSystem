@@ -13,7 +13,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-// Integrationstest for StudentMapper
 class StudentMapperTest {
 
     private static final String USER = "postgres";
@@ -29,7 +28,6 @@ class StudentMapperTest {
 
         try (Connection connection = dbConnection.getConnection()) {
             try (Statement stmt = connection.createStatement()) {
-                // Opret testtabellen
                 stmt.execute("DROP TABLE IF EXISTS test.student");
                 stmt.execute("CREATE TABLE test.student (" +
                         "email VARCHAR(255) PRIMARY KEY, " +
@@ -48,7 +46,6 @@ class StudentMapperTest {
     void setUp() {
         try (Connection connection = dbConnection.getConnection()) {
             try (Statement stmt = connection.createStatement()) {
-                // Ryd testtabellen og indsæt testdata
                 stmt.execute("DELETE FROM student");
 
                 stmt.execute("INSERT INTO student (email, name, status, phone, password) VALUES " +
@@ -85,7 +82,6 @@ class StudentMapperTest {
 
         StudentMapper.addStudent(student, dbConnection);
 
-        // Verificér, at den studerende er tilføjet korrekt
         List<Student> students = StudentMapper.getAllStudents(dbConnection);
         assertEquals(4, students.size());
         assertEquals("Eve", students.get(3).getName());

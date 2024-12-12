@@ -21,23 +21,18 @@ import java.util.List;
 
 public class StudentController {
 
-    private StudentMapper studentMapper;
 
     public static void addRoutes(Javalin app, ConnectionPool dbConnection) {
-        // Ruter til oprettelse og visning af studerende
         app.get("/", ctx -> ctx.render("index.html"));
         app.get("/createstudent.html", ctx -> ctx.render("createstudent.html"));
 
-        // Rute til at oprette studerende
         app.post("/students/create", ctx -> createStudent(ctx, dbConnection));
 
-        // Rute til at hente alle studerende og vise dem i studentview
         app.get("/studentview", ctx -> {
-            getAllStudents(ctx, dbConnection);  // Hent studerende og vis dem i studentview
+            getAllStudents(ctx, dbConnection);
         });
 
         app.get("/studentpage", ctx -> {
-            // Du kan vælge at sende en meddelelse om succesfuld login, hvis ønsket
             showBookingPage(ctx,dbConnection);
         });
 

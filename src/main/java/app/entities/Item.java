@@ -7,7 +7,6 @@ public class Item {
     private String category;
     private String status;
 
-    // Constructor
     public Item(String item_name, String description, String category, String status) {
         this.item_name = item_name;
         this.description = description;

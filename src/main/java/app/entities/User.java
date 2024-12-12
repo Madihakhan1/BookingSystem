@@ -12,7 +12,6 @@ public abstract class User {
         return status;
     }
 
-    // Konstruktør, der tager email, name, phone og status
     public User(String email, String name, String status) {
         this.email = email;
         this.name = name;
@@ -20,7 +19,6 @@ public abstract class User {
         this.isAdmin = false;
     }
 
-    // Konstruktør, der tager email, name, phone og password
     public User(String email, String name, String phone, String password) {
         this.email = email;
         this.name = name;
@@ -31,7 +29,6 @@ public abstract class User {
 
 
 
-    // Getter og Setter for email
     public String getEmail() {
         return email;
     }
@@ -40,7 +37,6 @@ public abstract class User {
         this.email = email;
     }
 
-    // Getter og Setter for name
     public String getName() {
         return name;
     }
@@ -49,7 +45,6 @@ public abstract class User {
         this.name = name;
     }
 
-    // Getter og Setter for phone
     public String getPhone() {
         return phone;
     }
@@ -58,7 +53,6 @@ public abstract class User {
         this.phone = phone;
     }
 
-    // Getter og Setter for password
     public String getPassword() {
         return password;
     }
@@ -67,7 +61,6 @@ public abstract class User {
         this.password = password;
     }
 
-    // Getter og Setter for isAdmin
     public boolean isAdmin() {
         return isAdmin;
     }

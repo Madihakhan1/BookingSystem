@@ -16,7 +16,7 @@ public class StudentMapper {
 
     public static List<Student> getAllStudents(ConnectionPool pool) throws DatabaseException {
         List<Student> students = new ArrayList<>();
-        String sql = "SELECT name, email, status FROM student"; // Hent status også
+        String sql = "SELECT name, email, status FROM student";
 
         try (Connection connection = pool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -28,7 +28,7 @@ public class StudentMapper {
                 String email = rs.getString("email");
                 String status = rs.getString("status");
 
-                students.add(new Student(email, name, status)); // Send status til Student
+                students.add(new Student(email, name, status));
             }
 
         } catch (SQLException e) {
@@ -66,7 +66,7 @@ public class StudentMapper {
             stmt.setString(2, student.getName());
             stmt.setString(3, student.getPhone());
             stmt.setString(4, student.getStatus());
-            stmt.setString(5, student.getPassword()); // Sørg for at password bliver sat korrekt
+            stmt.setString(5, student.getPassword());
             stmt.executeUpdate();
         }
     }
@@ -86,7 +86,7 @@ public class StudentMapper {
                 student = new Student(
                         rs.getString("email"),
                         rs.getString("name"),
-                        rs.getString("status") // Sørg for, at status hentes korrekt her
+                        rs.getString("status")
                 );
             } else {
                 throw new DatabaseException("Invalid email or password.");

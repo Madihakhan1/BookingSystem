@@ -24,7 +24,7 @@ public class Booking {
 
     }
 
-    public Booking(String itemName, String email, String studentName, LocalDate bookingDate, int days, String comment, String bookingStatus) {
+    public Booking(String itemName, String email, String name, LocalDate bookingDate, int days, String comment, String bookingStatus) {
         this.itemName = itemName;
         this.email = email;
         this.bookingDate = bookingDate;
@@ -34,7 +34,6 @@ public class Booking {
         this.name = name;
     }
 
-    // Getter-metoder
     public int getBookingId() {
         return bookingId;
     }
@@ -48,7 +47,7 @@ public class Booking {
     }
 
     public String getItemName() {
-        return itemName; // Ændret fra getItem_name til getItemName
+        return itemName;
     }
 
     public String getEmail() {
@@ -56,7 +55,7 @@ public class Booking {
     }
 
     public LocalDate getBookingDate() {
-        return bookingDate; // Ændret fra getBooking_date til getBookingDate
+        return bookingDate;
     }
 
     public int getDays() {
@@ -68,7 +67,7 @@ public class Booking {
     }
 
     public String getBookingStatus() {
-        return bookingStatus; // Ændret fra getBooking_status til getBookingStatus
+        return bookingStatus;
     }
 
     // Setter-metoder
@@ -77,7 +76,7 @@ public class Booking {
     }
 
     public void setItemName(String itemName) {
-        this.itemName = itemName; // Ændret fra setItem_name til setItemName
+        this.itemName = itemName;
     }
 
     public void setEmail(String email) {
@@ -85,7 +84,7 @@ public class Booking {
     }
 
     public void setBookingDate(LocalDate bookingDate) {
-        this.bookingDate = bookingDate; // Ændret fra setBooking_date til setBookingDate
+        this.bookingDate = bookingDate;
     }
 
     public void setDays(int days) {
@@ -97,6 +96,6 @@ public class Booking {
     }
 
     public void setBookingStatus(String bookingStatus) {
-        this.bookingStatus = bookingStatus; // Ændret fra setBooking_status til setBookingStatus
+        this.bookingStatus = bookingStatus;
     }
 }

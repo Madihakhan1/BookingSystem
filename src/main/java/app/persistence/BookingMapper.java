@@ -34,10 +34,10 @@ public class BookingMapper {
             }
 
         } catch (SQLException e) {
-            throw new SQLException("Fejl ved hentning af bookinger: " + e.getMessage(), e);  // Håndter eventuelle fejl
+            throw new SQLException("Fejl ved hentning af bookinger: " + e.getMessage(), e);
         }
 
-        return bookings;  // Returnér listen af bookinger
+        return bookings;
     }
 
     public static void addBooking(Booking booking, ConnectionPool dbConnection) throws SQLException {
@@ -46,15 +46,14 @@ public class BookingMapper {
         try (Connection conn = dbConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            // Set the prepared statement parameters from the Booking object
-            stmt.setString(1, booking.getItemName());  // Set item_name
-            stmt.setString(2, booking.getEmail());  // Set student email
-            stmt.setDate(3, java.sql.Date.valueOf(booking.getBookingDate()));  // Convert LocalDate to SQL Date
-            stmt.setInt(4, booking.getDays());  // Set number of days for the booking
-            stmt.setString(5, booking.getComment());  // Set any comment added for the booking
-            stmt.setString(6, booking.getBookingStatus());  // Set booking status (e.g., "Pending")
+            stmt.setString(1, booking.getItemName());
+            stmt.setString(2, booking.getEmail());
+            stmt.setDate(3, java.sql.Date.valueOf(booking.getBookingDate()));
+            stmt.setInt(4, booking.getDays());
+            stmt.setString(5, booking.getComment());
+            stmt.setString(6, booking.getBookingStatus());
 
-            // Execute the update to insert the booking into the database
+
             stmt.executeUpdate();
         }
     }
@@ -73,17 +72,15 @@ public class BookingMapper {
             List<Booking> bookings = new ArrayList<>();
 
             while (rs.next()) {
-                // Opret Booking-objekt med detaljer fra databasen
                 Booking booking = new Booking(
-                        rs.getString("item_name"),               // Udstyr
-                        rs.getString("email"),                   // Elevens e-mail
-                        rs.getString("student_name"),            // Elevens navn
-                        rs.getDate("booking_date").toLocalDate(), // Bookingdato som LocalDate
-                        rs.getInt("days"),                       // Antal dage booket
-                        rs.getString("comment"),                 // Kommentar
-                        rs.getString("booking_status")           // Status
+                        rs.getString("item_name"),
+                        rs.getString("email"),
+                        rs.getString("student_name"),
+                        rs.getDate("booking_date").toLocalDate(),
+                        rs.getInt("days"),
+                        rs.getString("comment"),
+                        rs.getString("booking_status")
                 );
-                // Status
                 bookings.add(booking);
             }
 

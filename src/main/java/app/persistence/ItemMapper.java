@@ -15,7 +15,7 @@ public class ItemMapper {
 
     public static List<Item> getAllItems(ConnectionPool dbConnection) throws Exception {
         List<Item> items = new ArrayList<>();
-        String query = "SELECT item_name, description, category, status, item_id, location FROM item";  // Opdateret til at hente de nødvendige kolonner
+        String query = "SELECT item_name, description, category, status, item_id, location FROM item";
 
         try (Connection conn = dbConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query);
@@ -28,7 +28,6 @@ public class ItemMapper {
                 String status = rs.getString("status");
 
 
-                // Opretter et Item-objekt med de opdaterede oplysninger og tilføjer det til listen
                 items.add(new Item(itemName, description, category, status));
             }
 

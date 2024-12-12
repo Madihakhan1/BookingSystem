@@ -10,7 +10,6 @@ import java.util.List;
 
 public class ItemController {
 
-    private static final ItemMapper itemMapper = new ItemMapper();
 
     public static void addRoutes(Javalin app, ConnectionPool dbConnection) {
 
@@ -19,12 +18,10 @@ public class ItemController {
 
     public static void showEquipment(Context ctx, ConnectionPool dbConnection) {
         try {
-            // Hent alle tilgængelige udstyr fra ItemMapper
             List<Item> items = ItemMapper.getAllItems(dbConnection);
 
-            // Send udstyr til Thymeleaf
-            ctx.attribute("items", items);  // Send data til Thymeleaf
-            ctx.render("equipmentview.html");  // Render booking-siden med udstyr
+            ctx.attribute("items", items);
+            ctx.render("equipmentview.html");
         } catch (Exception e) {
             ctx.status(500).result("Fejl ved hentning af udstyr: " + e.getMessage());
         }
