@@ -40,12 +40,11 @@ public class StudentController {
 
 
 
-    // Hent alle studerende fra databasen
     public static void getAllStudents(Context ctx, ConnectionPool dbConnection) {
         try {
-            List<Student> students = StudentMapper.getAllStudents(dbConnection); // Brug Mapperen til at hente studerende
-            ctx.attribute("student", students); // Sæt studerende i attributen
-            ctx.render("studentview.html"); // Render studentview.html med studerende
+            List<Student> students = StudentMapper.getAllStudents(dbConnection);
+            ctx.attribute("student", students);
+            ctx.render("studentview.html");
         } catch (DatabaseException e) {
             ctx.status(500).result("Fejl ved hentning af studerende: " + e.getMessage());
         }
@@ -83,7 +82,7 @@ public class StudentController {
 
             // Sender succesbesked
             ctx.attribute("message", "Din bruger er nu oprettet.");
-            ctx.render("createstudent.html");  // Vis succesmeddelelse på samme side
+            ctx.render("createstudent.html");
         } catch (DatabaseException e) {
             ctx.attribute("message", "Fejl ved oprettelse af bruger: " + e.getMessage());
             ctx.render("createstudent.html");
@@ -91,13 +90,11 @@ public class StudentController {
 
     }
 
-    // Metode til at vise booking formularen
     public static void showBookingPage(Context ctx, ConnectionPool dbConnection) {
         try {
-            // Hent udstyr fra databasen for at vise i dropdown
             List<Item> items = ItemMapper.getAllItems(dbConnection);
-            ctx.attribute("items", items);  // Send udstyrsliste til Thymeleaf-siden
-            ctx.render("studentpage.html");  // Render bookingformularen
+            ctx.attribute("items", items);
+            ctx.render("studentpage.html");
         } catch (Exception e) {
             ctx.status(500).result("Fejl ved hentning af udstyr: " + e.getMessage());
         }

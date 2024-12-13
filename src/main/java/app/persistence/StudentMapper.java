@@ -70,7 +70,6 @@ public class StudentMapper {
             stmt.executeUpdate();
         }
     }
-
     public static Student login(String email, String password, ConnectionPool dbConnection) throws DatabaseException {
         Student student = null;
         String query = "SELECT email, name, status FROM student WHERE email = ? AND password = ?";
@@ -98,6 +97,7 @@ public class StudentMapper {
 
         return student;
     }
+
 
 
 }

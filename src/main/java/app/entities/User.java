@@ -69,5 +69,7 @@ public abstract class User {
         this.isAdmin = isAdmin;
     }
 
-
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }
