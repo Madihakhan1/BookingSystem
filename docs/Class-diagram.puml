@@ -69,7 +69,7 @@ package "Controllers" {
     }
 }
 
-package "Mappers" {
+package Mappers {
     class StudentMapper {
         + getAllStudents() : List<Student>
         + void insertStudent(student Student)
@@ -87,7 +87,7 @@ package "Mappers" {
     }
 }
 
-' Relationships
+
 Student  --o  Booking
 Booking --* Item
 Item --o Room

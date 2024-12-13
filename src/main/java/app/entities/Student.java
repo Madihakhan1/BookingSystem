@@ -1,38 +1,27 @@
 package app.entities;
 
-public class Student {
+public class Student extends User {
 
-    private String email;
-    private String name;
-    private String phone;
+    private String password;
 
-    public Student(String email, String name, String phone) {
-        this.email = email;
-        this.name = name;
-        this.phone = phone;
+    // Konstruktør med status og password
+    public Student(String email, String name, String phone, String status, String password) {
+        super(email, name, phone, status);
+        this.password = password;
     }
 
-    public String getEmail() {
-        return email;
+
+    public Student(String email, String name, String status) {
+            super(email, name, null, status);
+        }
+
+
+
+    public String getPassword() {
+        return password;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

@@ -3,9 +3,21 @@ package app;
 import app.config.SessionConfig;
 import app.config.ThymeleafConfig;
 
+import app.controllers.AdminController;
+import app.controllers.BookingController;
+import app.controllers.ItemController;
+import app.entities.Student;
 import app.persistence.ConnectionPool;
+import app.persistence.StudentMapper;
 import io.javalin.Javalin;
+import io.javalin.http.Context;
+import io.javalin.http.staticfiles.Location;
 import io.javalin.rendering.template.JavalinThymeleaf;
+import app.controllers.StudentController;
+
+
+import java.sql.Connection;
+import java.util.List;
 
 
 public class Main {
@@ -29,11 +41,10 @@ public class Main {
 
         // Routing
 
-       /* app.get("/users", ctx -> UserController.showUserList(ctx, connectionPool));
-        app.post("/login", ctx -> UserController.login(ctx, connectionPool));
-        */
-
-
+        StudentController.addRoutes(app, connectionPool);
+        AdminController.addRoutes(app, connectionPool);
+        ItemController.addRoutes(app, connectionPool);
+        BookingController.addRoutes(app,connectionPool);
 
 
 
