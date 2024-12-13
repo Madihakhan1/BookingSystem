@@ -1,0 +1,158 @@
+@startuml
+
+package Entities {
+    class Student {
+    - String password
+        + Student(String email, String name, String phone, String status, String password)
+        + Student(String email, String name, String status)
+        + String getPassword()
+        + void setPassword(String password)
+    }
+
+   class Item {
+       - String item_name
+       - String description
+       - String category
+       - String status
+       + Item(String item_name, String description, String category, String status)
+       + String getItem_name()
+       + void setItem_name(String item_name)
+       + String getDescription()
+       + void setDescription(String description)
+       + String getCategory()
+       + void setCategory(String category)
+       + String getStatus()
+       + void setStatus(String status)
+   }
+
+class Booking {
+    - int bookingId
+    - String itemName
+    - String email
+    - LocalDate bookingDate
+    - int days
+    - String comment
+    - String bookingStatus
+    - String name
+    + Booking(String itemName, String email, LocalDate bookingDate, int days, String comment, String bookingStatus)
+    + Booking(String itemName, String email, String name, LocalDate bookingDate, int days, String comment, String bookingStatus)
+    + int getBookingId()
+    + void setBookingId(int bookingId)
+    + String getItemName()
+    + void setItemName(String itemName)
+    + String getEmail()
+    + void setEmail(String email)
+    + LocalDate getBookingDate()
+    + void setBookingDate(LocalDate bookingDate)
+    + int getDays()
+    + void setDays(int days)
+    + String getComment()
+    + void setComment(String comment)
+    + String getBookingStatus()
+    + void setBookingStatus(String bookingStatus)
+    + String getName()
+    + void setName(String name)
+}
+
+
+
+    class Admin{
+    + Admin(String email, String name, String phone, String password)
+
+    }
+
+    abstract class User{
+    - String email
+        - String name
+        - String phone
+        - String password
+        - boolean isAdmin
+        - String status
+        + User(String email, String name, String status)
+        + User(String email, String name, String phone, String password)
+        + String getEmail()
+        + void setEmail(String email)
+        + String getName()
+        + void setName(String name)
+        + String getPhone()
+        + void setPhone(String phone)
+        + String getPassword()
+        + void setPassword(String password)
+        + boolean isAdmin()
+        + void setAdmin(boolean isAdmin)
+        + String getStatus()
+        + void setStatus(String status)
+
+    }
+
+}
+
+package "Controllers" {
+ class StudentController {
+         + void addRoutes(Javalin app, ConnectionPool dbConnection)
+         + void getAllStudents(Context ctx, ConnectionPool dbConnection)
+         + void createStudent(Context ctx, ConnectionPool dbConnection)
+         + void showBookingPage(Context ctx, ConnectionPool dbConnection)
+     }
+
+    class ItemController {
+            + void addRoutes(Javalin app, ConnectionPool dbConnection)
+            + void showEquipment(Context ctx, ConnectionPool dbConnection)
+        }
+
+    class BookingController {
+        + void addRoutes(Javalin app, ConnectionPool dbConnection)
+        + void doBookEquipment(Context ctx, ConnectionPool dbConnection)
+    }
+
+    class AdminController {
+        + void addRoutes(Javalin app, ConnectionPool dbConnection)
+        + void doLogin(Context ctx, ConnectionPool dbConnection)
+        + void doLogout(Context ctx)
+        + void adminPage(Context ctx)
+        + void addStudent(Context ctx, ConnectionPool dbConnection)
+        + void showStudents(Context ctx, ConnectionPool dbConnection)
+        + void showBookingOverview(Context ctx, ConnectionPool dbConnection)
+    }
+}
+
+package Mappers {
+   class StudentMapper {
+         + List<Student> getAllStudents(ConnectionPool pool) : List<Student>
+         + void createStudent(String name, String email, String phone, String password, ConnectionPool pool) : void
+         + void addStudent(Student student, ConnectionPool dbConnection) : void
+         + Student login(String email, String password, ConnectionPool dbConnection) : Student
+     }
+
+     class ItemMapper {
+            + List<Item> getAllItems(ConnectionPool dbConnection) throws Exception
+        }
+
+ class BookingMapper {
+         + List<Booking> getBookingsByStudentEmail(String email, ConnectionPool dbConnection) throws SQLException
+         + void addBooking(Booking booking, ConnectionPool dbConnection) throws SQLException
+         + List<Booking> getAllBookingsWithDetails(ConnectionPool dbConnection) throws DatabaseException
+     }
+
+     class AdminMapper {
+            + Admin login(String email, String password, ConnectionPool dbConnection) throws Exception
+        }
+}
+
+
+Student  --o  Booking
+Booking --* Item
+Admin --> User
+Student --> User
+Admin --o Booking
+
+StudentController --> StudentMapper
+ItemController --> ItemMapper
+BookingController --> BookingMapper
+AdminController --> AdminMapper
+
+AdminController --> StudentMapper
+AdminController --> ItemMapper
+AdminController --> BookingMapper
+
+@enduml

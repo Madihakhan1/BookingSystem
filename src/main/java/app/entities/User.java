@@ -8,9 +8,6 @@ public abstract class User {
     protected boolean isAdmin;
     protected String status;
 
-    public String getStatus() {
-        return status;
-    }
 
     public User(String email, String name, String status) {
         this.email = email;
@@ -72,4 +69,12 @@ public abstract class User {
     public void setStatus(String status) {
         this.status = status;
     }
+
+
+    public String getStatus() {
+        return this.status;
+    }
+
+
+
 }

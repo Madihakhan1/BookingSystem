@@ -39,6 +39,9 @@ public class AdminController {
 
         app.get("/bookingoverview", ctx -> showBookingOverview(ctx, dbConnection));
 
+        app.post("/admin/update-booking-status", ctx -> updateBookingStatus(ctx, dbConnection));
+        app.post("/admin/delete-booking", ctx -> deleteBooking(ctx, dbConnection));
+
     }
 
     public static void doLogin(Context ctx, ConnectionPool dbConnection) {
@@ -138,6 +141,28 @@ public class AdminController {
             ctx.render("bookingoverview.html");
         } catch (Exception e) {
             ctx.status(500).result("Fejl ved hentning af bookingoversigt: " + e.getMessage());
+        }
+    }
+
+    public static void updateBookingStatus(Context ctx, ConnectionPool dbConnection) {
+        int bookingId = Integer.parseInt(ctx.formParam("bookingId"));
+        String newStatus = ctx.formParam("status");
+
+        try {
+            BookingMapper.updateBookingStatus(bookingId, newStatus, dbConnection);
+            ctx.redirect("/bookingoverview");
+        } catch (Exception e) {
+            ctx.status(500).result("Fejl ved opdatering af bookingstatus: " + e.getMessage());
+        }
+    }
+
+    private static void deleteBooking(Context ctx, ConnectionPool connectionPool) {
+        try {
+            int bookingId = Integer.parseInt(ctx.formParam("bookingId"));
+            BookingMapper.deleteBooking(bookingId, connectionPool);
+            ctx.redirect("/bookingoverview");
+        } catch (DatabaseException | NumberFormatException e) {
+            ctx.status(500).result("Fejl ved sletning af booking: " + e.getMessage());
         }
     }
 

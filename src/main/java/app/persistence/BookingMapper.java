@@ -60,7 +60,7 @@ public class BookingMapper {
 
 
     public static List<Booking> getAllBookingsWithDetails(ConnectionPool dbConnection) throws DatabaseException {
-        String sql = "SELECT b.item_name, b.email, b.booking_date, b.days, b.comment, b.booking_status, " +
+        String sql = "SELECT b.booking_id,b.item_name, b.email, b.booking_date, b.days, b.comment, b.booking_status, " +
                 "s.name AS student_name " +
                 "FROM booking AS b " +
                 "LEFT JOIN student AS s ON b.email = s.email";
@@ -73,6 +73,7 @@ public class BookingMapper {
 
             while (rs.next()) {
                 Booking booking = new Booking(
+                        rs.getInt("booking_id"),
                         rs.getString("item_name"),
                         rs.getString("email"),
                         rs.getString("student_name"),
@@ -87,6 +88,40 @@ public class BookingMapper {
             return bookings;
         } catch (SQLException e) {
             throw new DatabaseException("Fejl ved hentning af bookingdetaljer: " + e.getMessage(), e);
+        }
+    }
+
+
+    public static void updateBookingStatus(int bookingId, String status, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "UPDATE booking SET booking_status = ? WHERE booking_id = ?";
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setString(1, status);
+            ps.setInt(2, bookingId);
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl i opdatering af bookingstatus");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl i opdatering af bookingstatus: " + e.getMessage(), e);
+        }
+    }
+
+    public static void deleteBooking(int bookingId, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "DELETE FROM booking WHERE booking_id = ?";
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setInt(1, bookingId);
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl ved sletning af booking");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl ved sletning af booking: " + e.getMessage(), e);
         }
     }
 

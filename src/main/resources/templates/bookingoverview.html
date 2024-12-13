@@ -18,25 +18,44 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th>Elev Navn</th> <!-- Elevens navn -->
-            <th>Elev E-mail</th> <!-- Elevens e-mail -->
-            <th>Udstyr</th> <!-- Det udstyr, der er booket -->
-            <th>Bookingdato</th> <!-- Hvornår udstyret er booket -->
-            <th>Antal dage booket</th> <!-- Hvor mange dage -->
-            <th>Kommentar</th> <!-- Eventuelle kommentarer -->
-            <th>Status</th> <!-- Status for bookingen -->
+            <th>Elev Navn</th>
+            <th>Elev E-mail</th>
+            <th>Udstyr</th>
+            <th>Bookingdato</th>
+            <th>Antal dage booket</th>
+            <th>Kommentar</th>
+            <th>Status</th>
+            <th>Opdater Status</th>
+            <th>Slet Booking</th>
         </tr>
         </thead>
         <tbody>
-        <!-- Iterer over listen af bookinger -->
         <tr th:each="booking : ${bookings}">
-            <td th:text="${booking.name}"></td> <!-- Elevens navn -->
-            <td th:text="${booking.email}"></td> <!-- Elevens e-mail -->
-            <td th:text="${booking.itemName}"></td> <!-- Udstyr -->
-            <td th:text="${booking.bookingDate}"></td> <!-- Bookingdato -->
-            <td th:text="${booking.days}"></td> <!-- Antal dage booket -->
-            <td th:text="${booking.comment}"></td> <!-- Kommentar -->
-            <td th:text="${booking.bookingStatus}"></td> <!-- Status -->
+            <td th:text="${booking.name}"></td>
+            <td th:text="${booking.email}"></td>
+            <td th:text="${booking.itemName}"></td>
+            <td th:text="${booking.bookingDate}"></td>
+            <td th:text="${booking.days}"></td>
+            <td th:text="${booking.comment}"></td>
+            <td th:text="${booking.bookingStatus}"></td>
+            <td>
+                <!-- Dropdown-menu til statusopdatering -->
+                <form action="/admin/update-booking-status" method="post" class="d-inline">
+                    <input type="hidden" name="bookingId" th:value="${booking.bookingId}">
+                    <select name="status" class="form-select mb-2">
+                        <option value="i brug" th:selected="${booking.bookingStatus == 'i brug'}">I brug</option>
+                        <option value="tilbageleveret" th:selected="${booking.bookingStatus == 'tilbageleveret'}">Tilbageleveret</option>
+                    </select>
+                    <button type="submit" class="btn btn-success">Opdater</button>
+                </form>
+            </td>
+            <td>
+                <!-- Formular til sletning af booking -->
+                <form action="/admin/delete-booking" method="post" class="d-inline">
+                    <input type="hidden" name="bookingId" th:value="${booking.bookingId}">
+                    <button type="submit" class="btn btn-danger">Slet</button>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>

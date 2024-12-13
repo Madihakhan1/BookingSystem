@@ -77,7 +77,6 @@ public class StudentController {
         }
 
         try {
-            // Opretter studerende
             StudentMapper.createStudent(name, email, phone, password, dbConnection);
 
             // Sender succesbesked
