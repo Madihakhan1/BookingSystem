@@ -24,7 +24,8 @@ public class Booking {
 
     }
 
-    public Booking(String itemName, String email, String name, LocalDate bookingDate, int days, String comment, String bookingStatus) {
+    public Booking(int bookingId, String itemName, String email, String name, LocalDate bookingDate, int days, String comment, String bookingStatus) {
+        this.bookingId = bookingId;
         this.itemName = itemName;
         this.email = email;
         this.bookingDate = bookingDate;
