@@ -28,7 +28,7 @@ public class BookingController {
     public static void doBookEquipment(Context ctx, ConnectionPool dbConnection) {
         try {
             String itemName = ctx.formParam("itemName");
-            String email = ctx.sessionAttribute("studentEmail");
+            String email = ctx.sessionAttribute("email");
             LocalDate bookingDate = LocalDate.parse(ctx.formParam("bookingDate"));
             int days = Integer.parseInt(ctx.formParam("days"));
             String comment = ctx.formParam("comment");

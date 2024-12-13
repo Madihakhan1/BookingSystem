@@ -61,6 +61,7 @@ public class AdminController {
 
                 if (student != null) {
                     ctx.sessionAttribute("student", student);
+                    ctx.sessionAttribute("email",email);
                     ctx.redirect("/studentpage");
                 } else {
                     ctx.attribute("message", "Ugyldige loginoplysninger for studerende!");
