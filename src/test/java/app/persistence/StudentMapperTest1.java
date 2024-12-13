@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class StudentMapperTest {
@@ -89,6 +90,14 @@ class StudentMapperTest {
 
 
 
+    @Test
+    void testLoginSuccess() throws DatabaseException {
+        Student student = StudentMapper.login("student1@example.com", "password1", dbConnection);
+        assertNotNull(student);
+        assertEquals("student1@example.com", student.getEmail());
+        assertEquals("Alice", student.getName());
+        assertEquals("Active", student.getStatus());
+    }
 
     @Test
     void testLoginFailure() {
