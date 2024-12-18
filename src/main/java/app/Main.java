@@ -21,10 +21,7 @@ import java.util.List;
 
 public class Main {
 
-    private static final String USER = "postgres";
-    private static final String PASSWORD = "fedebamseabe32";
-    private static final String URL = "jdbc:postgresql://165.232.127.225:5432/%s?currentSchema=public";
-    private static final String DB = "bookingsystem";
+
 
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance(USER, PASSWORD, URL, DB);
 
