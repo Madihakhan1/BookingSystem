@@ -39,7 +39,6 @@
             <td th:text="${booking.comment}"></td>
             <td th:text="${booking.bookingStatus}"></td>
             <td>
-                <!-- Dropdown-menu til statusopdatering -->
                 <form action="/admin/update-booking-status" method="post" class="d-inline">
                     <input type="hidden" name="bookingId" th:value="${booking.bookingId}">
                     <select name="status" class="form-select mb-2">
@@ -50,7 +49,6 @@
                 </form>
             </td>
             <td>
-                <!-- Formular til sletning af booking -->
                 <form action="/admin/delete-booking" method="post" class="d-inline">
                     <input type="hidden" name="bookingId" th:value="${booking.bookingId}">
                     <button type="submit" class="btn btn-danger">Slet</button>

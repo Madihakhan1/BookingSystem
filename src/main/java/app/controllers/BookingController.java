@@ -32,7 +32,7 @@ public class BookingController {
             LocalDate bookingDate = LocalDate.parse(ctx.formParam("bookingDate"));
             int days = Integer.parseInt(ctx.formParam("days"));
             String comment = ctx.formParam("comment");
-            String bookingStatus = "Booked";
+            String bookingStatus = "I brug";
 
             Booking booking = new Booking(itemName, email, bookingDate, days, comment, bookingStatus);
 
