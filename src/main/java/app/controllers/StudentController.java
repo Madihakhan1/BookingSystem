@@ -24,7 +24,7 @@ public class StudentController {
 
     public static void addRoutes(Javalin app, ConnectionPool dbConnection) {
         app.get("/", ctx -> ctx.render("index.html"));
-        app.get("/createstudent.html", ctx -> ctx.render("createstudent.html"));
+        app.get("/createstudent", ctx -> ctx.render("createstudent.html"));
 
         app.post("/students/create", ctx -> createStudent(ctx, dbConnection));
 
@@ -35,9 +35,7 @@ public class StudentController {
         app.get("/studentpage", ctx -> {
             showBookingPage(ctx,dbConnection);
         });
-        app.get("/login.html", ctx -> {
-            ctx.render("login.html");
-        });
+
 
 
     }
