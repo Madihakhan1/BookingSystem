@@ -101,14 +101,15 @@ public class AdminController {
         String email = ctx.formParam("email");
         String password = ctx.formParam("password");
 
-        if (name == null || email == null || password == null || name.isEmpty() || email.isEmpty() || password.isEmpty()) {
-            ctx.attribute("message", "Alle felter skal udfyldes.");
+        if (name == null || email == null || password == null ||
+                name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            ctx.attribute("message", "Navn, email og password skal udfyldes.");
             ctx.render("add-student.html");
             return;
         }
 
         try {
-            Student student = new Student(name, email, password);
+            Student student = new Student(email,name,password);
             StudentMapper.addStudent(student, dbConnection);
             ctx.attribute("message", "Studerende er blevet tilføjet!");
             ctx.render("add-student.html");

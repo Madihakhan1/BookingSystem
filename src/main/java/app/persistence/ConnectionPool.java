@@ -11,8 +11,12 @@ import java.util.logging.Logger;
 /***
  * Singleton pattern applied to handling a Hikari ConnectionPool
  */
-public class ConnectionPool
-{
+public class ConnectionPool {
+    private static final String DEFAULT_USER = System.getenv("JDBC_USER");
+    private static final String DEFAULT_PASSWORD = System.getenv("JDBC_PASSWORD");
+    private static final String DEFAULT_URL = System.getenv("JDBC_CONNECTION");
+    private static final String DEFAULT_DB = System.getenv("JDBC_DB");
+
 
     public static ConnectionPool instance = null;
     public static HikariDataSource ds = null;
@@ -21,8 +25,17 @@ public class ConnectionPool
      * Empty and private constructor due to single pattern. Use getInstance methods to
      * instantiate and get a connection pool.
      */
-    private ConnectionPool()
+    private ConnectionPool() {
+    }
+
+    /***
+     * Getting a singleton instance of a Hikari Connection Pool with default credentials and
+     * connection string hardcoded in class
+     * @return ConnectionPool object
+     */
+    public static ConnectionPool getInstance()
     {
+        return getInstance(DEFAULT_USER, DEFAULT_PASSWORD, DEFAULT_URL, DEFAULT_DB);
     }
 
     /***
@@ -35,19 +48,15 @@ public class ConnectionPool
      * @param db database name for connection
      * @return A ConnectionPool object
      */
-    public static ConnectionPool getInstance(String user, String password, String url, String db)
-    {
-        if (instance == null)
-        {
-            if (System.getenv("DEPLOYED") != null)
-            {
+    public static ConnectionPool getInstance(String user, String password, String url, String db) {
+        if (instance == null) {
+            if (System.getenv("DEPLOYED") != null) {
                 ds = createHikariConnectionPool(
                         System.getenv("JDBC_USER"),
                         System.getenv("JDBC_PASSWORD"),
-                        System.getenv("JDBC_CONNECTION_STRING"),
+                        System.getenv("JDBC_CONNECTION"),
                         System.getenv("JDBC_DB"));
-            } else
-            {
+            } else {
                 ds = createHikariConnectionPool(user, password, url, db);
             }
             instance = new ConnectionPool();
@@ -60,16 +69,15 @@ public class ConnectionPool
      * @return a database connection to be used in sql requests
      * @throws SQLException
      */
-    public synchronized Connection getConnection() throws SQLException
-    {
+    public synchronized Connection getConnection() throws SQLException {
+        Logger.getLogger("web").log(Level.INFO, ": get data connection");
         return ds.getConnection();
     }
 
     /***
      * Closing a Hikari Connection Pool after use.
      */
-    public synchronized void close()
-    {
+    public synchronized void close() {
         Logger.getLogger("web").log(Level.INFO, "Shutting down connection pool");
         ds.close();
     }
@@ -82,8 +90,7 @@ public class ConnectionPool
      * @param db database name for connection
      * @return a Hikari DataSource
      */
-    private static HikariDataSource createHikariConnectionPool(String user, String password, String url, String db)
-    {
+    private static HikariDataSource createHikariConnectionPool(String user, String password, String url, String db) {
         Logger.getLogger("web").log(Level.INFO,
                 String.format("Connection Pool created for: (%s, %s, %s, %s)", user, password, url, db));
         HikariConfig config = new HikariConfig();
@@ -98,4 +105,5 @@ public class ConnectionPool
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
         return new HikariDataSource(config);
     }
+
 }

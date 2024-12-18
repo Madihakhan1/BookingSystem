@@ -56,20 +56,20 @@ public class StudentMapper {
     }
 
 
-    // Metode til at gemme en studerende i databasen
     public static void addStudent(Student student, ConnectionPool dbConnection) throws Exception {
-        String query = "INSERT INTO student (email, name, phone, status, password) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO student (email, name, password, status) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = dbConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, student.getEmail());
             stmt.setString(2, student.getName());
-            stmt.setString(3, student.getPhone());
+            stmt.setString(3, student.getPassword());
             stmt.setString(4, student.getStatus());
-            stmt.setString(5, student.getPassword());
             stmt.executeUpdate();
         }
     }
+
+
     public static Student login(String email, String password, ConnectionPool dbConnection) throws DatabaseException {
         Student student = null;
         String query = "SELECT email, name, status FROM student WHERE email = ? AND password = ?";

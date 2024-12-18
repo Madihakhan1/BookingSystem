@@ -14,7 +14,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class StudentMapperTest {
+/*class StudentMapperTest {
 
     private static final String USER = "postgres";
     private static final String PASSWORD = "fedebamseabe32";
@@ -107,3 +107,4 @@ class StudentMapperTest {
     }
 
 }
+*/

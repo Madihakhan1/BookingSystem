@@ -24,6 +24,10 @@ public abstract class User {
         this.isAdmin = false;
     }
 
+    public User(String email, String name) {
+        this.email = email;
+        this.name = name;
+    }
 
 
     public String getEmail() {
