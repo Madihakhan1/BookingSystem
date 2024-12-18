@@ -16,10 +16,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class StudentMapperTest {
 
-    private static final String USER = "postgres";
-    private static final String PASSWORD = "fedebamseabe32";
-    private static final String URL = "jdbc:postgresql://165.232.127.225:5432/%s?currentSchema=test";
-    private static final String DB = "bookingsystem";
 
     private static ConnectionPool dbConnection;
 
