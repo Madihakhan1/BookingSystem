@@ -35,6 +35,10 @@ public class StudentController {
         app.get("/studentpage", ctx -> {
             showBookingPage(ctx,dbConnection);
         });
+        app.get("/login.html", ctx -> {
+            ctx.render("login.html");
+        });
+
 
     }
 
