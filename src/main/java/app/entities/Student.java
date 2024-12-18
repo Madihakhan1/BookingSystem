@@ -4,7 +4,7 @@ public class Student extends User {
 
     private String password;
 
-    public Student(String email, String name, String phone, String status, String password) {
+    public Student(String email, String name, String phone, String password, String status) {
         super(email, name, phone, status);
         this.password = password;
     }
@@ -14,6 +14,10 @@ public class Student extends User {
             super(email, name, status);
         }
 
+
+    public Student(String email, String name, String password,String status) {
+        super(email, name, password, status);
+    }
 
 
     public String getPassword() {

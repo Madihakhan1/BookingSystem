@@ -97,18 +97,19 @@ public class AdminController {
 
 
     public static void addStudent(io.javalin.http.Context ctx, ConnectionPool dbConnection) {
-        String name = ctx.formParam("name");
         String email = ctx.formParam("email");
+        String name = ctx.formParam("name");
         String password = ctx.formParam("password");
+        String status = ctx.formParam("Active");
 
-        if (name == null || email == null || password == null || name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+        if (name == null || email == null || password == null || status== null || name.isEmpty() || email.isEmpty() || password.isEmpty() || status.isEmpty()) {
             ctx.attribute("message", "Alle felter skal udfyldes.");
             ctx.render("add-student.html");
             return;
         }
 
         try {
-            Student student = new Student(name, email, password);
+            Student student = new Student(email, name, password, status);
             StudentMapper.addStudent(student, dbConnection);
             ctx.attribute("message", "Studerende er blevet tilføjet!");
             ctx.render("add-student.html");

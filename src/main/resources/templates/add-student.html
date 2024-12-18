@@ -18,17 +18,24 @@
 
   <!-- Studerende formular -->
   <form action="/admin/add-student" method="post">
+    <!-- Email først -->
     <div class="mb-3">
       <label for="email" class="form-label">Email</label>
       <input type="email" class="form-control" id="email" name="email" required>
     </div>
+    <!-- Navn dernæst -->
     <div class="mb-3">
       <label for="name" class="form-label">Navn</label>
       <input type="text" class="form-control" id="name" name="name" required>
     </div>
+    <!-- Kodeord til sidst -->
     <div class="mb-3">
       <label for="password" class="form-label">Kodeord</label>
       <input type="password" class="form-control" id="password" name="password" required>
+    </div>
+    <div class="mb-3">
+      <label for="status" class="form-label">status</label>
+      <input type="text" class="form-control" id="status" name="status" required>
     </div>
     <button type="submit" class="btn btn-primary">Tilføj Studerende</button>
   </form>
