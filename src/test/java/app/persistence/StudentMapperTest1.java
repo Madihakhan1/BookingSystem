@@ -11,20 +11,23 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-
 import static org.junit.jupiter.api.Assertions.*;
 
-/*class StudentMapperTest {
+class StudentMapperTest {
 
-    private static final String USER = "postgres";
-    private static final String PASSWORD = "fedebamseabe32";
-    private static final String URL = "jdbc:postgresql://165.232.127.225:5432/%s?currentSchema=test";
-    private static final String DB = "bookingsystem";
+    private static final String USER = System.getenv("DB_USER");
+    private static final String PASSWORD = System.getenv("DB_PASSWORD");
+    private static final String URL = System.getenv("DB_URL");
+    private static final String DB = System.getenv("DB_NAME");
 
     private static ConnectionPool dbConnection;
 
     @BeforeAll
     static void setUpClass() {
+        if (USER == null || PASSWORD == null || URL == null || DB == null) {
+            fail("Missing required environment variables for database connection");
+        }
+
         dbConnection = ConnectionPool.getInstance(USER, PASSWORD, URL, DB);
 
         try (Connection connection = dbConnection.getConnection()) {
@@ -59,7 +62,6 @@ import static org.junit.jupiter.api.Assertions.*;
         }
     }
 
-
     @Test
     void testGetAllStudents() throws DatabaseException {
         List<Student> students = StudentMapper.getAllStudents(dbConnection);
@@ -88,8 +90,6 @@ import static org.junit.jupiter.api.Assertions.*;
         assertEquals("Eve", students.get(3).getName());
     }
 
-
-
     @Test
     void testLoginSuccess() throws DatabaseException {
         Student student = StudentMapper.login("student1@example.com", "password1", dbConnection);
@@ -105,6 +105,4 @@ import static org.junit.jupiter.api.Assertions.*;
             StudentMapper.login("student1@example.com", "wrongpassword", dbConnection);
         });
     }
-
 }
-*/
